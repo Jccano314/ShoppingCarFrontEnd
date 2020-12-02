@@ -1,0 +1,60 @@
+<div class="container-sidebar">
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>SHOPPING CART</span>
+      <span class="menu-spacer"></span>
+      <div class="options-menu-bar" fxShow="true" fxHide.lt-md>
+        <!-- The following menu items will be hidden on both SM and XS screen sizes -->
+        <a [routerLink]="['../welcome']" mat-button>
+          <mat-icon>home</mat-icon>&nbsp;&nbsp;Inicio
+        </a>
+        <a [routerLink]="['users']" mat-button>
+          <mat-icon>account_circle</mat-icon>&nbsp;&nbsp;Usuarios
+        </a>
+        <a [routerLink]="['roles']" mat-button>
+          <mat-icon>supervised_user_circle</mat-icon>&nbsp;&nbsp;Roles
+        </a>
+        <a [routerLink]="['products']" mat-button>
+          <mat-icon>add_shopping_cart</mat-icon>&nbsp;&nbsp;Productos
+        </a>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <!--BARRA DE NAVEGACIÓN-->
+  <mat-sidenav-container fxFlexFill>
+    <mat-sidenav #sidenav>
+      <mat-nav-list>
+        <a (click)="sidenav.toggle()" mat-list-item>
+          <mat-icon>close</mat-icon>
+        </a>
+        <mat-list-item role="listitem">
+          <a [routerLink]="['../welcome']" mat-button>
+            <mat-icon>home</mat-icon>&nbsp;&nbsp;Inicio
+          </a>
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <a [routerLink]="['users']" mat-button>
+            <mat-icon>account_circle</mat-icon>&nbsp;&nbsp;Usuarios
+          </a>
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <a [routerLink]="['roles']" mat-button>
+            <mat-icon>supervised_user_circle</mat-icon>&nbsp;&nbsp;Roles
+          </a>
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <a [routerLink]="['products']" mat-button>
+            <mat-icon>add_shopping_cart</mat-icon>&nbsp;&nbsp;Productos
+          </a>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content fxFlexFill>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

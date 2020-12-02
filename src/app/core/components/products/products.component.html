@@ -1,0 +1,102 @@
+<div class="container" fxLayout="column" fxFlex.xs="100" fxFlex.sm="70" fxFlex.md="70" fxFlex.lg="70" fxFlex.xl="70">
+  <!--TITULO-->
+  <div fxLayout="row" fxFlex>
+    <h1>Productos</h1>
+  </div>
+  <!--TABLA DE DATOS-->
+  <div fxLayout="row" fxLayoutGap="150px">
+    <div fxLayout="column" fxFlex="60">
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <!-- Identificador -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre del producto </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <!-- Fecha de creación -->
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo del producto </th>
+          <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+        </ng-container>
+
+        <!-- Nombre del rol -->
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio </th>
+          <td mat-cell *matCellDef="let element"> ${{element.price}} </td>
+        </ng-container>
+
+        <!-- Opción de eliminar -->
+        <ng-container matColumnDef="edit" stickyEnd>
+          <th mat-header-cell *matHeaderCellDef>Editar</th>
+          <td class="pointer" (click)="changeProduct(element)" mat-cell *matCellDef="let element">
+            <mat-icon>edit</mat-icon>
+          </td>
+        </ng-container>
+
+        <!-- Opción de editar -->
+        <ng-container matColumnDef="delete" stickyEnd>
+          <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+          <td class="pointer" (click)="deleteProduct(element.id)" mat-cell *matCellDef="let element">
+            <mat-icon>delete</mat-icon>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <div fxLayout="column" fxFlex="35">
+      <form [formGroup]="frmGroup" (submit)="onSubmit()">
+        <!--PRODUCTO-->
+        <div fxLayout="row">
+          <mat-form-field fxFlex appearance="outline">
+            <mat-label>Nombre del producto</mat-label>
+            <input matInput type="text" formControlName="name" [required]="frmGroup.controls.name.invalid"
+              placeholder="Nombre del producto" />
+            <mat-error *ngIf="frmGroup.controls.name.hasError('required')">¡Este campo es obligatorio!
+            </mat-error>
+            <mat-error *ngIf="frmGroup.controls.name.hasError('maxlength')">
+              ¡El campo debe tener maximo 64 caracteres!</mat-error>
+          </mat-form-field>
+        </div>
+        <!--TIPO-->
+        <div fxLayout="row">
+          <mat-form-field fxFlex appearance="outline">
+            <mat-label>Tipo de producto</mat-label>
+            <input matInput placeholder="Tipo de producto" formControlName="type"
+              [required]="frmGroup.controls.type.invalid">
+            <mat-error *ngIf="frmGroup.controls.type.hasError('required')">
+              ¡Este campo es obligatorio!</mat-error>
+            <mat-error *ngIf="frmGroup.controls.type.hasError('minlength')">
+              ¡El campo debe tener minimo 1 caracteres!</mat-error>
+            <mat-error *ngIf="frmGroup.controls.type.hasError('maxlength')">
+              ¡El campo debe tener maximo 64 caracteres!</mat-error>
+          </mat-form-field>
+        </div>
+        <!--PRECIO-->
+        <div fxLayout="row">
+          <mat-form-field fxFlex appearance="outline">
+            <mat-label>Precio del producto</mat-label>
+            <input matInput placeholder="Precio del producto" formControlName="price"
+              [required]="frmGroup.controls.price.invalid">
+            <mat-error *ngIf="frmGroup.controls.price.hasError('required')">
+              ¡Este campo es obligatorio!</mat-error>
+          </mat-form-field>
+        </div>
+        <!--BOTONES-->
+        <div fxLayout="row">
+          <button color="primary" mat-raised-button [disabled]="frmGroup.invalid" class="button-save">
+            <mat-icon>save</mat-icon>&nbsp;&nbsp;Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

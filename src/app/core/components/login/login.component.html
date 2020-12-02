@@ -1,0 +1,32 @@
+<mat-card>
+  <h1 class="title-login">SHOPPING CART</h1>
+  <mat-card-content>
+    <form [formGroup]="frmGroup" (ngSubmit)="onSubmit()">
+      <img class="user-login" src="../../../../../assets/images/user-login.png" />
+      <mat-form-field appearance="outline" class="separator-fields">
+        <mat-label>Nombre de usuario</mat-label>
+        <input matInput placeholder="Nombre de usuario" formControlName="userName"
+          [required]="frmGroup.controls.userName.invalid">
+        <mat-error *ngIf="frmGroup.controls.userName.hasError('required')">
+          ¡Este campo es obligatorio!</mat-error>
+        <mat-error *ngIf="frmGroup.controls.userName.hasError('minlength')">
+          ¡El campo debe tener minimo 8 caracteres!</mat-error>
+        <mat-error *ngIf="frmGroup.controls.userName.hasError('maxlength')">
+          ¡El campo debe tener maximo 32 caracteres!</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Contraseña</mat-label>
+        <input matInput type="password" placeholder="Contraseña" formControlName="password"
+          [required]="frmGroup.controls.password.invalid">
+        <mat-error *ngIf="frmGroup.controls.password.hasError('required')">
+          ¡Este campo es obligatorio!</mat-error>
+        <mat-error *ngIf="frmGroup.controls.password.hasError('minlength')">
+          ¡El campo debe tener minimo 8 caracteres!</mat-error>
+        <mat-error *ngIf="frmGroup.controls.password.hasError('maxlength')">
+          ¡El campo debe tener maximo 512 caracteres!</mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary" [disabled]="frmGroup.invalid" class="button-login">INGRESAR&nbsp;&nbsp;<mat-icon>input</mat-icon>
+        </button>
+    </form>
+  </mat-card-content>
+</mat-card>

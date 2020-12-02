@@ -1,0 +1,106 @@
+<div class="container" fxLayout="column" fxFlex.xs="100" fxFlex.sm="70" fxFlex.md="70" fxFlex.lg="70" fxFlex.xl="70">
+  <!--TITULO-->
+  <div fxLayout="row" fxFlex>
+    <h1>Usuarios</h1>
+  </div>
+  <!--TABLA DE DATOS-->
+  <div fxLayout="row" fxLayoutGap="150px">
+    <div fxLayout="column" fxFlex="60">
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <!-- Identificador -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre del usuario </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <!-- Fecha de creación -->
+        <ng-container matColumnDef="dataCreate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de creación </th>
+          <td mat-cell *matCellDef="let element"> {{element.dataCreate}} </td>
+        </ng-container>
+
+        <!-- Nombre del rol -->
+        <ng-container matColumnDef="role.name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Rol </th>
+          <td mat-cell *matCellDef="let element"> {{element.role.name}} </td>
+        </ng-container>
+
+        <!-- Opción de eliminar -->
+        <ng-container matColumnDef="edit" stickyEnd>
+          <th mat-header-cell *matHeaderCellDef>Editar</th>
+          <td class="pointer" (click)="changeUser(element)" mat-cell *matCellDef="let element">
+            <mat-icon>edit</mat-icon>
+          </td>
+        </ng-container>
+
+        <!-- Opción de editar -->
+        <ng-container matColumnDef="delete" stickyEnd>
+          <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+          <td class="pointer" (click)="deleteUser(element.id)" mat-cell *matCellDef="let element">
+            <mat-icon>delete</mat-icon>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <div fxLayout="column" fxFlex="35">
+      <form [formGroup]="frmGroup" (submit)="onSubmit()">
+        <!--USUARIO-->
+        <div fxLayout="row">
+          <mat-form-field fxFlex appearance="outline">
+            <mat-label>Nombre del usuario</mat-label>
+            <input matInput type="text" formControlName="name" [required]="frmGroup.controls.name.invalid"
+              placeholder="Nombre del usuario" />
+            <mat-error *ngIf="frmGroup.controls.name.hasError('required')">¡Este campo es obligatorio!
+            </mat-error>
+            <mat-error *ngIf="frmGroup.controls.name.hasError('minlength')">
+              ¡El campo debe tener minimo 8 caracteres!</mat-error>
+            <mat-error *ngIf="frmGroup.controls.name.hasError('maxlength')">
+              ¡El campo debe tener maximo 32 caracteres!</mat-error>
+          </mat-form-field>
+        </div>
+        <!--CONTRASEÑA-->
+        <div fxLayout="row">
+          <mat-form-field fxFlex appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input matInput type="password" placeholder="Contraseña" formControlName="password"
+              [required]="frmGroup.controls.password.invalid">
+            <mat-error *ngIf="frmGroup.controls.password.hasError('required')">
+              ¡Este campo es obligatorio!</mat-error>
+            <mat-error *ngIf="frmGroup.controls.password.hasError('minlength')">
+              ¡El campo debe tener minimo 8 caracteres!</mat-error>
+            <mat-error *ngIf="frmGroup.controls.password.hasError('maxlength')">
+              ¡El campo debe tener maximo 512 caracteres!</mat-error>
+          </mat-form-field>
+        </div>
+        <!--ROL-->
+        <div fxLayout="row">
+          <mat-form-field fxFlex appearance="outline">
+            <mat-label>Rol del usuario</mat-label>
+            <mat-select formControlName="role" [required]="frmGroup.controls.role.invalid">
+              <mat-option value="">Seleccione...</mat-option>
+              <mat-option *ngFor="let role of roles$ | async" [value]="role.id">{{role.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="frmGroup.controls.role.hasError('required')">¡Este campo es obligatorio!
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <!--BOTONES-->
+        <div fxLayout="row">
+          <button color="primary" mat-raised-button [disabled]="frmGroup.invalid" class="button-save">
+            <mat-icon>save</mat-icon>&nbsp;&nbsp;Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
